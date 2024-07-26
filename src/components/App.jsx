@@ -4,9 +4,10 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import Button from "./Button/Button";
 import Loader from "./Loader/Loader";
 import Modal from "./Modal/Modal";
+import "../styles.css";
 import axios from "axios";
 
-const API_KEY = "44932961-d39f9f89f928c138824effb07";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = "https://pixabay.com/api/";
 
 const App = () => {
@@ -16,10 +17,10 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState("");
-  const [totalHits, setTotalHits] = useState(0); // To track total hits
+  const [totalHits, setTotalHits] = useState(0);
 
   useEffect(() => {
-    if (query === "") return;
+    if (!query) return;
 
     const fetchImages = async () => {
       setLoading(true);
@@ -28,7 +29,7 @@ const App = () => {
           `${BASE_URL}?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`,
         );
         setImages((prevImages) => [...prevImages, ...response.data.hits]);
-        setTotalHits(response.data.totalHits); // Update total hits
+        setTotalHits(response.data.totalHits);
       } catch (error) {
         console.error("Error fetching images:", error);
       } finally {
@@ -46,9 +47,7 @@ const App = () => {
     setPage(1);
   };
 
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  const handleLoadMore = () => setPage((prevPage) => prevPage + 1);
 
   const openModal = (imageURL) => {
     setModalImage(imageURL);
@@ -60,8 +59,8 @@ const App = () => {
     setModalImage("");
   };
 
-  const totalPages = Math.ceil(totalHits / 12); // Calculate total pages
-  const canLoadMore = page < totalPages; // Determine if more pages are available
+  const totalPages = Math.ceil(totalHits / 12);
+  const canLoadMore = page < totalPages;
 
   return (
     <div className="App">
@@ -69,7 +68,7 @@ const App = () => {
       <ImageGallery images={images} onImageClick={openModal} />
       {loading && <Loader />}
       {canLoadMore && !loading && <Button onClick={handleLoadMore} />}
-      {showModal && <Modal largeImageURL={modalImage} onClose={closeModal} />}
+      {showModal && <Modal image={modalImage} onClose={closeModal} />}
     </div>
   );
 };

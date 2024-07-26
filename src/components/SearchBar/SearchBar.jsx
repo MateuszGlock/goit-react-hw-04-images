@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "../../styles.css"; // Importing the main CSS file
 
 const SearchBar = ({ onSubmit }) => {
   const [query, setQuery] = useState("");
 
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
+  const handleChange = (e) => setQuery(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(query);
+    setQuery("");
   };
 
   return (
@@ -23,11 +21,9 @@ const SearchBar = ({ onSubmit }) => {
         <input
           className="SearchForm-input"
           type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
           value={query}
           onChange={handleChange}
+          placeholder="Search images and photos"
         />
       </form>
     </header>
