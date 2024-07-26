@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "./ImageGallery/ImageGallery";
@@ -72,5 +73,14 @@ const App = () => {
     </div>
   );
 };
+=======
+function App() {
+  return (
+    <>
+      <h1>React Homework Template (Vite)</h1>
+    </>
+  );
+}
+>>>>>>> c94ef5cbe0dd7e21fae81d1ff7216aeaa810bb09
 
 export default App;
